@@ -1,0 +1,30 @@
+{% extends "main/base.html" %}
+
+{% block title %}Product: {{ product.name }}{% endblock title %}
+
+{% block content %}
+
+    <main>
+        <section class="detail-page container">
+            <img src="{{ product.image.url }}" alt="">
+            <div class="description">
+                <h1 class='product_name'>{{ product.name }}</h1>
+                {% if product.discount > 0 %}
+                    <div class="pricce">
+                        <span class='price_without_discount'>${{ product.price }}</span>${{ product.get_price_with_discount }}
+                    </div>
+                {% else %}
+                    <div class="pricce">
+                        ${{ product.price }}
+                    </div>
+                {% endif %}
+                <p>{{ product.description|linebreaks }}</p>
+                <form action="" method="post">
+
+                    <button type='submit' class='btn'>Add to Cart</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+{% endblock content %}

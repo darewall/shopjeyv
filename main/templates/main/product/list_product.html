@@ -1,0 +1,57 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Jeyv - Clothers Shop{% endblock title %}
+
+{% block content %}
+    <main>
+        <section class="main container">
+            <div class="main-catalog">
+                <h1 class='catalog-name'>Categories</h1>
+                <ul class="main-catalog-list">
+                    
+                    <li {% if not category %}class='selected'{% endif %}>
+                        <a href="{% url "main:product_list" %}" class="main-catalog-link">ALL</a>
+                    </li>
+                    {% for c in categories  %}
+                        <li {% if c.slug == category.slug %}class='selected'{% endif %}>
+                            <a href="{{ c.get_absolute_url }}" class="main-catalog-link">{{ c.name }}</a>
+                        </li>
+    
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="product-list">
+                <h1 class='product-list-name'>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+                <div class="product-cards">
+                    {% for product in products  %}
+                    <div class="product-card">
+                        
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="{{ product.image.url }}" alt="">
+                        </a>
+                        <h2>{{ product.name }}</h2>
+                        {% if product.discount > 0 %}
+                            <div class="price">
+                                <p>
+                                    ${{ product.price }} 
+                                </p>
+                                 ${{ product.get_price_with_discount}}
+                            </div>
+                        {% else %}
+                            <div class="price">
+                                ${{ product.price }}
+                            </div>
+                            
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+{% endblock content %}

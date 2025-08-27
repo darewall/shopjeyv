@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <title>{% block title %}Jeyv - Clothers Shop{% endblock title %}</title>
+</head>
+<body>
+  <header>
+    <div class="header">
+      <div class="header-item">
+        <a href=""><h2>The Best Shop</h2></a>
+      </div>
+      <div class="header-logo header-item">
+        <h1>Jeyv</h1>
+      </div>
+      <div class="header-item">
+        <ul class="header-item-list">
+          <li class="header-link">Shop</li>
+          <li class="header-link">Cart</li>
+          <li class="header-link">Profile</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  {% block content %}
+  
+  {% endblock content %}
+  
+</body>
+</html>
