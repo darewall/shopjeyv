@@ -10,12 +10,12 @@
                 <h1 class='catalog-name'>Categories</h1>
                 <ul class="main-catalog-list">
                     
-                    <li {% if not category %}class='selected'{% endif %}>
-                        <a href="{% url "main:product_list" %}" class="main-catalog-link">ALL</a>
+                    <li >
+                        <a href="{% url "main:product_list" %}" class="main-catalog-link{% if not category %} selected{% endif %}">ALL</a>
                     </li>
                     {% for c in categories  %}
-                        <li {% if c.slug == category.slug %}class='selected'{% endif %}>
-                            <a href="{{ c.get_absolute_url }}" class="main-catalog-link">{{ c.name }}</a>
+                        <li >
+                            <a href="{% url 'main:product_list_by_category' c.slug %}" class="main-catalog-link{% if c.slug == category.slug %} selected{% endif %}">{{ c.name }}</a>
                         </li>
     
                     {% endfor %}

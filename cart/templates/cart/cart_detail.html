@@ -1,0 +1,79 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Shop Cart{% endblock title %}
+
+{% block content %}
+    <main>
+        <section class="cart container">
+            <h1 class='cart-name'>Shopping Cart</h1>
+            <div class="table-header">
+                <div class="table-header-left-side-bar">
+                    <p class='table-header-item'>Product</p>
+                </div>
+                <div class="table-header-right-side-bar">
+                    <p class='table-header-item'>Price</p>
+                    <p class='table-header-item'>Quantity</p>
+                    <p class='table-header-item'>Total</p>
+                </div>
+            </div>
+            <div class="table-items">
+                {% if cart|length > 0 %}
+                    {% for item in cart %}
+                        <div class="table-item">
+                            <div class="table-item-left-side-bar">
+                                <div class="product-img">
+                                    <img src="{{ item.item.image.url }}" alt="">
+                                </div>
+                                <div class="product-info">
+                                    <p>{{ item.item.name }}</p>
+                                    <form action="{% url "cart:remove-cart" item.item.id %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="item_id" value="{{ product.id }}">
+                                        <button class="product-remove" type="submit">Remove</button>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="table-item-right-side-bar">
+                                <div class="product-price">
+                                    ${{ item.item.get_price_with_discount }}
+                                </div>
+                                <div class="product-quantity-and-remove">
+                                    <form action="{% url "cart:update-cart" item.item.id %}" method="post" id="update-form-{{ item.item.id }}" class="product-quantity">
+                                        {% csrf_token %}
+                                        <input type="number" min="1" value="{{ item.quantity }}" name='quantity' required id="quantity-{{ item.item.id }}" oninput="updateCart{{ item.item.id }}">
+                                    </form>
+                                </div>
+                                <div class="product-total">
+                                    ${{ item.total_price }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                    {% endfor %}
+                    <h3 class="total-price-cart">Total price: {{ cart.get_total_price }}</h3>
+                {% else %}
+                        <div class="cart-is-empty">
+                            <h1>Cart is empty</h1>
+                            <a href="{% url 'main:product_list' %}" class='to-detail-list'>Back to Catalog</a>
+                        </div>
+                    
+                
+                {% endif %}
+            </div>
+        </section>
+
+        <script>
+            let timeout = null;
+
+            function updateCart(itemId) {
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    document.getElementById('update-form-' + itemId).submit();
+                }, 1000);
+            }
+        </script>
+
+    </main>
+
+{% endblock content %}

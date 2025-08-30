@@ -18,8 +18,8 @@
       </div>
       <div class="header-item">
         <ul class="header-item-list">
-          <li class="header-link">Shop</li>
-          <li class="header-link">Cart</li>
+          <li class="header-link"><a href="{% url "main:product_list" %}">Shop</a></li>
+          <li class="header-link cart"><a href="{% url 'cart:cart-detail' %}">Cart<span class='cart-data'>{{ cart|length }}</span></a></li>
           <li class="header-link">Profile</li>
         </ul>
       </div>
